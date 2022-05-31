@@ -1,0 +1,23 @@
+{
+  "name": "reactli",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "bin": {
+    "rc": "./dist/index.js"
+  },
+  "keywords": [
+    "cli",
+    "react"
+  ],
+  "author": "Dulranga Dhawanitha",
+  "license": "ISC",
+  "description": "React Utility CLI to make your life easier.",
+  "devDependencies": {
+    "@types/node": "^17.0.36",
+    "@types/yargs": "^17.0.10",
+    "typescript": "^4.7.2"
+  },
+  "dependencies": {
+    "yargs": "^17.5.1"
+  }
+}
