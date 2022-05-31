@@ -3,22 +3,37 @@ import { getTemplate } from "../../templates";
 import { toPascalCase } from "../../utils/change-case";
 import { Command } from "../../utils/types";
 import { storeReplacedTemplate } from "../../templates/store-replaced-template";
+import path from "path";
+import { existsSync } from "fs";
 
 export const genComponent: Command = async ({ args }) => {
   const [name] = args;
   if (!name) return showHelp("No Component Name provided");
+  if (typeof name !== "string")
+    return showHelp("Give a name for the component");
 
-  const componentName = toPascalCase(name as string);
+  const parsedName = path.parse(name);
+
+  const componentName = toPascalCase(parsedName.name);
 
   const replacer = getTemplate("components/default");
 
-  const templateGenerator = replacer((template, path) => ({
+  const templateGenerator = replacer((template, compnentPath) => ({
     file: template.replace(/\$\$name/g, componentName),
-    path: path.replace(/\$\$name/g, componentName),
+    path: path.resolve(
+      "components",
+      parsedName.dir,
+      compnentPath.replace(/\$\$name/g, componentName)
+    ),
   }));
 
+  if (existsSync(path.resolve("components", componentName)))
+    return console.log(
+      chalk.red("Directory Already exists. Try a different name")
+    );
+
   for await (const replacedTemplate of templateGenerator) {
-    storeReplacedTemplate(replacedTemplate);
+    await storeReplacedTemplate(replacedTemplate);
   }
 };
 
