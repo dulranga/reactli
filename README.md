@@ -21,11 +21,12 @@ I am hoping to expand this more so you will be able to,
   - NextJS
   - Gatsby
   - React with Vite
+  - All with typescript
   - and more
 
 ## Here's the first look
 
-![Reactli](./screenshots/generate_component.ts.jpg)
+![Reactli](./screenshots/generate_component.jpg)
 
 ## Get started
 
