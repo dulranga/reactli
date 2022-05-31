@@ -1,9 +1,10 @@
 import chalk from "chalk";
 import inquirer from "inquirer";
-import { Command } from "./types";
+import { Command } from "../utils/types";
 
-const newApp: Command<"name" | "age"> = async ({ args, named }) => {
+const newApp: Command<"typescript"> = async ({ args, named }) => {
   const [_cmd, appName] = args;
+
   if (!appName) {
     const msg = `
 ${chalk.red("No App name provided")}
