@@ -9,15 +9,18 @@ const init = async () => {
     .usage(usage)
     .option("new", { description: "Create New React app" })
     .help(true);
-
   const args = await options.argv;
   const command = getCommand(args._[0]);
-  console.log(command, args);
 
   if (command) {
-    command(args as any);
+    command({
+      args: args._,
+      named: { ...args },
+    });
   } else {
+    console.log("Command not found\n");
     yargs.showHelp();
+    process.exit(-1);
   }
 };
 

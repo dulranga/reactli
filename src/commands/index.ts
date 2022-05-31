@@ -1,14 +1,12 @@
+import { Nullable } from "../utils/types";
 import newApp from "./new-app";
-
-export type Command = (args: (string | number)[]) => void;
-
-type Commands = Record<string, Command>;
+import { Command, Commands } from "./types";
 
 const commands: Commands = {
   new: newApp,
 };
 
-const getCommand = (cmd: string | number) => {
+const getCommand = (cmd: string | number): Nullable<Command> => {
   return commands[cmd] ?? null;
 };
 
