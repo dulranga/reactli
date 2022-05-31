@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "newLine": "lf",
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
     /* Projects */
     // "incremental": true,                              /* Enable incremental compilation */
