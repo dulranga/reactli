@@ -1,1 +1,3 @@
-export const update = (data: Record<string, any>) => {};
+export const update = (data: Record<string, any>) => {
+  
+};
