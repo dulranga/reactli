@@ -3,11 +3,16 @@ import fs from "fs/promises";
 import { Command } from "../utils/types";
 import { Answers, prompts } from "./new-app/data";
 import { showError } from "../utils/show-error";
+import chalk from "chalk";
+
+export const CONFIG_NAME = "reactli.config.json";
 
 const generateInitialConfig = async (name: string, answers?: Answers) => {
   const config = {
     name,
     typescript: answers?.typescript ?? false,
+    css: answers?.css ?? "css",
+    testing: answers?.testing ?? "",
     templates: {
       component: {
         default: {
@@ -16,9 +21,10 @@ const generateInitialConfig = async (name: string, answers?: Answers) => {
       },
     },
   };
-  console.log(__dirname);
 
-  await fs.writeFile("reactli.config.json", JSON.stringify(config));
+  await fs.writeFile(CONFIG_NAME, JSON.stringify(config, null, 2));
+  console.log(chalk.green("Created"), chalk.bold.green(CONFIG_NAME));
+  return config;
 };
 
 export const init: Command<"yes" | "y"> = async ({ named }) => {
@@ -28,8 +34,7 @@ export const init: Command<"yes" | "y"> = async ({ named }) => {
     const appName = pkgJSON?.name;
 
     if (named.y || named.yes) {
-      await generateInitialConfig(appName);
-      return;
+      return await generateInitialConfig(appName);
     }
 
     const answers = await inquirer.prompt(prompts);
@@ -41,4 +46,10 @@ export const init: Command<"yes" | "y"> = async ({ named }) => {
       );
     }
   }
+};
+
+export const createReactliConfig = async () => {
+  const raw = await fs.readFile(CONFIG_NAME);
+  const info = JSON.parse(raw.toString());
+  return info;
 };
