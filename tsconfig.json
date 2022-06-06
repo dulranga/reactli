@@ -100,5 +100,5 @@
     // }
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "exclude": ["src/templates/**"]
+  "exclude": ["src/templates/**", "dist/**", "node_modules/**"]
 }
