@@ -1,11 +1,14 @@
 import chalk from "chalk";
 import { getTemplate } from "../../templates";
-import { toPascalCase } from "../../utils/change-case";
+import { convertToAllCases, toPascalCase } from "../../utils/change-case";
 import { Command } from "../../utils/types";
 import { storeReplacedTemplate } from "../../templates/store-replaced-template";
 import path from "path";
 import { existsSync } from "fs";
 import { COMPONENT_NAME_REGEX } from "../../constants/regex";
+import { replaceContent } from "../../utils/replace-content";
+
+const PATH = "src/components";
 
 export const genComponent: Command = async ({ args }) => {
   const [name] = args;
@@ -14,27 +17,38 @@ export const genComponent: Command = async ({ args }) => {
     return showHelp("Give a name for the component");
 
   const parsedName = path.parse(name);
-  const componentName = toPascalCase(parsedName.name);
+  const componentName = convertToAllCases(parsedName.name);
 
-  if (!COMPONENT_NAME_REGEX.test(componentName))
+  if (!COMPONENT_NAME_REGEX.test(componentName.pascal))
     return showHelp(
       "Invalid name",
-      chalk.bgRed.white(componentName),
+      chalk.bgRed.white(parsedName.name),
       "for the component. Provide a valid string"
     );
 
-  const replacer = getTemplate("components/default");
+  const templatePath = config.typescript
+    ? "components/default-ts"
+    : "components/default";
 
-  const templateGenerator = replacer((template, compnentPath) => ({
-    file: template.replace(/\$\$name/g, componentName),
-    path: path.resolve(
-      "components",
-      parsedName.dir,
-      compnentPath.replace(/\$\$name/g, componentName)
-    ),
-  }));
+  const replacer = getTemplate(templatePath);
 
-  if (existsSync(path.resolve("components", parsedName.dir, componentName)))
+  const templateGenerator = replacer((template, componentPath) => {
+    const replaces = {
+      $name$: componentName.pascal,
+      $name_kebab$: componentName.kebab,
+    };
+
+    return {
+      file: replaceContent(template, replaces),
+      path: path.resolve(
+        PATH,
+        parsedName.dir,
+        replaceContent(componentPath, replaces)
+      ),
+    };
+  });
+
+  if (existsSync(path.resolve(PATH, parsedName.dir, componentName.kebab)))
     return console.log(
       chalk.red("Directory Already exists. Try a different name")
     );
@@ -45,13 +59,10 @@ export const genComponent: Command = async ({ args }) => {
 
   console.log(
     "\nComponent",
-    chalk.green(componentName),
+    chalk.green(componentName.pascal),
     "has successfully created."
   );
-  console.log(
-    "You can access it on",
-    path.resolve("components", parsedName.dir)
-  );
+  console.log("You can access it on", path.resolve(PATH, parsedName.dir));
 };
 
 const showHelp = (...errorMsg: string[]) => {
