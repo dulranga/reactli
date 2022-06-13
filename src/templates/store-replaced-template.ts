@@ -4,24 +4,25 @@ import fs from "fs/promises";
 import { existsSync } from "fs";
 import chalk from "chalk";
 
-export const storeReplacedTemplate = async (template: Replaced) => {
-  const parsedPath = path.parse(template.path);
-  if (!parsedPath.dir.length) return await write(template);
+export const storeReplacedTemplate = async (
+  template: Replaced,
+  userPath?: any
+) => {
+  const parsedPath = path.parse(userPath ?? template.path);
+  if (!parsedPath.dir.length) return await write(template, userPath);
 
-  if (existsSync(parsedPath.dir)) return write(template);
+  if (existsSync(parsedPath.dir)) return write(template, userPath);
 
   await fs.mkdir(parsedPath.dir, { recursive: true });
-  return await write(template);
+  return await write(template, userPath);
 };
 
-const write = async (template: Replaced) => {
+const write = async (template: Replaced, userPath?: any) => {
+  const templatePath = userPath ?? template.path;
   try {
-    console.log(
-      "Created File:",
-      chalk.green(path.relative(".", template.path))
-    );
+    console.log("Created File:", chalk.green(path.relative(".", templatePath)));
 
-    await fs.writeFile(template.path, template.file);
+    await fs.writeFile(templatePath, template.file);
     return true;
   } catch (error) {
     return false;
