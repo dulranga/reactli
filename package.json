@@ -1,6 +1,6 @@
 {
   "name": "reactli",
-  "version": "0.0.6",
+  "version": "1.0.6",
   "main": "dist/index.js",
   "bin": {
     "rc": "dist/index.js"
