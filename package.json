@@ -3,7 +3,8 @@
   "version": "1.0.7",
   "main": "dist/index.js",
   "bin": {
-    "rc": "dist/index.js"
+    "rc": "dist/index.js",
+    "reactli": "dist/index.js"
   },
   "keywords": [
     "cli",
