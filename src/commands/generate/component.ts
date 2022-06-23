@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { getTemplate } from "../../templates";
-import { convertToAllCases, toPascalCase } from "../../utils/change-case";
+import { convertToAllCases } from "../../utils/change-case";
 import { Command } from "../../utils/types";
 import { storeReplacedTemplate } from "../../templates/store-replaced-template";
 import path from "path";
@@ -30,6 +30,11 @@ export const genComponent: Command<"path"> = async ({ args, named }) => {
     ? "components/default-ts"
     : "components/default";
 
+  const componentStoreRootPath = path.resolve(
+    PATH,
+    (named.path as string) ?? parsedName.dir
+  );
+
   const replacer = getTemplate(templatePath);
 
   const templateGenerator = replacer((template, componentPath) => {
@@ -41,20 +46,19 @@ export const genComponent: Command<"path"> = async ({ args, named }) => {
     return {
       file: replaceContent(template, replaces),
       path: path.resolve(
-        PATH,
-        parsedName.dir,
+        componentStoreRootPath,
         replaceContent(componentPath, replaces)
       ),
     };
   });
 
-  if (existsSync(path.resolve(PATH, parsedName.dir, componentName.kebab)))
+  if (existsSync(path.resolve(componentStoreRootPath, componentName.kebab)))
     return console.log(
       chalk.red("Directory Already exists. Try a different name")
     );
 
   for await (const replacedTemplate of templateGenerator) {
-    await storeReplacedTemplate(replacedTemplate, named.path);
+    await storeReplacedTemplate(replacedTemplate, componentStoreRootPath);
   }
 
   console.log(
@@ -62,7 +66,7 @@ export const genComponent: Command<"path"> = async ({ args, named }) => {
     chalk.green(componentName.pascal),
     "has successfully created."
   );
-  console.log("You can access it on", path.resolve(PATH, parsedName.dir));
+  console.log("You can access it on", componentStoreRootPath);
 };
 
 const showHelp = (...errorMsg: string[]) => {
