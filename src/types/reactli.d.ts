@@ -1,6 +1,7 @@
 declare global {
   /** ### Custom Config in `reactli.config.json`
-   * Any script that's included as a command in `COMMANDS_ALLOWED_WITHOUT_REACT_APP` at *src/index.ts* <br>
+   * Any script that's included as a command in `COMMANDS_ALLOWED_WITHOUT_REACT_APP` at *src/index.ts*
+   *
    * will not able to use this
    */
   var config: {
