@@ -7,7 +7,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Reactli Docs",
-  tagline: "Reactli Docs",
+  tagline: "React CLI to make your life easier",
   url: "https://your-docusaurus-test-site.com",
   baseUrl: "/",
   onBrokenLinks: "throw",
@@ -78,13 +78,12 @@ const config = {
               },
             ],
           },
-
           {
             title: "More",
             items: [
               {
+                href: "https://github.com/dulranga/reactli",
                 label: "GitHub",
-                href: "https://github.com/facebook/docusaurus",
               },
               { label: "NPM", href: "https://www.npmjs.com/package/reactli" },
             ],

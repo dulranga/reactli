@@ -2,8 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
-import HomepageFeatures from "@site/src/components/HomepageFeatures";
-
+import PaginatorNavLink from "@theme/PaginatorNavLink";
 import styles from "./index.module.css";
 
 function HomepageHeader() {
@@ -21,14 +20,11 @@ function HomepageHeader() {
 export default function Home() {
   const { siteConfig } = useDocusaurusContext();
   return (
-    <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />"
-    >
+    <Layout title={`${siteConfig.title}`} description={siteConfig.tagline}>
       <HomepageHeader />
-      <main>
-        <HomepageFeatures />
-      </main>
+      <div className="homepage_button ">
+        <PaginatorNavLink title="Get started" isNext permalink="docs/intro" />
+      </div>
     </Layout>
   );
 }
