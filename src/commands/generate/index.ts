@@ -2,10 +2,13 @@ import chalk from "chalk";
 import { getCommand } from "..";
 import { Command, Commands } from "../../utils/types";
 import { genComponent } from "./component";
+import { genHook } from "./hook";
 
 const options: Commands = {
   c: genComponent,
   component: genComponent,
+  h: genHook,
+  hook: genHook,
 };
 
 export const generate: Command = (props) => {

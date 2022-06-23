@@ -37,12 +37,6 @@ Add this cli globally to your PC.
 $ npm install reactli -g
 ```
 
-To create a new component
-
-```
-rc g c <component_name>
-```
-
 _That's it!_
 
 I am hoping to develop this to the next level. so you can help me with just giving a 🌟 to this repo

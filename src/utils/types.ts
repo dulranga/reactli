@@ -1,5 +1,5 @@
 type Props<Named extends keyof any = string> = {
-  args: (string | number)[];
+  args: string[];
   named: Record<Named, string | number | boolean | unknown>;
 };
 
