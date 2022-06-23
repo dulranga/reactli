@@ -10,7 +10,7 @@ import { replaceContent } from "../../utils/replace-content";
 
 const PATH = "src/components";
 
-export const genComponent: Command<"path"> = async ({ args, named }) => {
+export const genComponent: Command = async ({ args }) => {
   const [name] = args;
   if (!name) return showHelp("No Component Name provided");
   if (typeof name !== "string")
@@ -58,7 +58,7 @@ export const genComponent: Command<"path"> = async ({ args, named }) => {
     );
 
   for await (const replacedTemplate of templateGenerator) {
-    await storeReplacedTemplate(replacedTemplate, componentStoreRootPath);
+    await storeReplacedTemplate(replacedTemplate);
   }
 
   console.log(
