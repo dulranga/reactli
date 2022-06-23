@@ -2,46 +2,52 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Reactli Introduction
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Reactli is a CLI tool for react. This will _generate all the boilerplate code_ for you.
 
 ## Getting Started
 
-Get started by **creating a new site**.
-
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+Get started by **installing the cli**.
 
 ### What you'll need
 
-- [Node.js](https://nodejs.org/en/download/) version 14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+- [Node.js](https://nodejs.org/en/download/)
+- NPM
 
-## Generate a new site
+## Install the CLI
 
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
+To access the commands you need to install the cli globally.
 
 ```bash
-npm init docusaurus@latest my-website classic
+npm install reactli -g
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+You can type this command into Command Prompt, PowerShell, Terminal, or any other integrated terminal of your code editor.
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+The command also installs all necessary dependencies you need to run Reactli CLI.
 
-## Start your site
+## Generate `reactli.config.json`
 
-Run the development server:
+Run the following command:
 
 ```bash
-cd my-website
-npm run start
+cd <to_the_root_of_your_react_project>
 ```
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+```bash
+rc init
+```
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+The `cd` command changes the current working directory to the root of your react project.
+Reactli config need to be in the **root** of the react project.
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+The `rc init` will ask few questions about your tech stack. Then it will create the `reactli.config.json` file.
+
+:::tip
+
+You can also use `reactli` instead of `rc` if you like the long syntax.
+
+```bash title=Example
+reactli <command>
+```
