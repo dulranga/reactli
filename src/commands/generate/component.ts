@@ -30,10 +30,7 @@ export const genComponent: Command = async ({ args }) => {
     ? "components/default-ts"
     : "components/default";
 
-  const componentStoreRootPath = path.resolve(
-    PATH,
-    (named.path as string) ?? parsedName.dir
-  );
+  const componentStoreRootPath = path.resolve(PATH, parsedName.dir);
 
   const replacer = getTemplate(templatePath);
 

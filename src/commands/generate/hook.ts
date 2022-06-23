@@ -6,10 +6,11 @@ import { storeReplacedTemplate } from "../../templates/store-replaced-template";
 import path from "path";
 import { COMPONENT_NAME_REGEX } from "../../constants/regex";
 import { replaceContent } from "../../utils/replace-content";
+import { existsSync } from "fs";
 
 const PATH = "src/hooks";
 
-export const genHook: Command<"path"> = async ({ args, named }) => {
+export const genHook: Command = async ({ args }) => {
   const [name] = args;
   if (!name) return showHelp("No Hook Name provided");
   if (typeof name !== "string") return showHelp("Give a name for the Hook");
@@ -44,13 +45,12 @@ export const genHook: Command<"path"> = async ({ args, named }) => {
     };
   });
 
-  // if (existsSync(path.resolve(PATH, parsedName.dir, hookName.pascal)))
-  //   return console.log(
-  //     chalk.red("Directory Already exists. Try a different name")
-  //   );
-
   for await (const replacedTemplate of templateGenerator) {
-    await storeReplacedTemplate(replacedTemplate, named.path);
+    if (existsSync(replacedTemplate.path))
+      return console.log(
+        chalk.red("hookName Already exists. Try a different name")
+      );
+    await storeReplacedTemplate(replacedTemplate);
   }
 
   console.log(
